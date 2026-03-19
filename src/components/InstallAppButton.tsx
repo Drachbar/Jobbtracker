@@ -1,0 +1,51 @@
+import { Button } from "@chakra-ui/react";
+import { Download } from "lucide-react";
+import { useEffect, useState } from "react";
+
+type BeforeInstallPromptEvent = Event & {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{
+    outcome: "accepted" | "dismissed";
+    platform: string;
+  }>;
+};
+
+export function InstallAppButton() {
+  const [deferredPrompt, setDeferredPrompt] =
+    useState<BeforeInstallPromptEvent | null>(null);
+
+  useEffect(() => {
+    function handleBeforeInstallPrompt(event: Event) {
+      event.preventDefault();
+      setDeferredPrompt(event as BeforeInstallPromptEvent);
+    }
+
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+
+    return () => {
+      window.removeEventListener(
+        "beforeinstallprompt",
+        handleBeforeInstallPrompt
+      );
+    };
+  }, []);
+
+  async function handleInstall() {
+    if (!deferredPrompt) return;
+
+    await deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    setDeferredPrompt(null);
+  }
+
+  if (!deferredPrompt) {
+    return null;
+  }
+
+  return (
+    <Button onClick={handleInstall} variant="outline">
+      <Download size={16} />
+      Installera
+    </Button>
+  );
+}
