@@ -46,5 +46,15 @@ export default defineConfig({
         ]
       }
     })
-  ]
+  ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          chakra: ["@chakra-ui/react", "framer-motion"],
+          icons: ["lucide-react", "react-icons"]
+        }
+      }
+    }
+  }
 });
