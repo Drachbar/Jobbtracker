@@ -39,7 +39,7 @@ export function JobStats({ stats }: Props) {
                 </Stat.Label>
 
                 <Stat.ValueText
-                  fontSize="2xl"
+                  fontSize="3xl"
                   fontWeight="bold"
                   color="gray.800"
                   _dark={{ color: "white" }}>

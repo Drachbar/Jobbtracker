@@ -1,4 +1,4 @@
-import { Card, Heading, Stack, Text } from "@chakra-ui/react";
+import { Box, Card, Heading, Stack, Text } from "@chakra-ui/react";
 import type { Job, JobStatus } from "../../types/job";
 import { groupJobsByMonth } from "../../utils/job-grouping";
 import { JobCard } from "./JobCard";
@@ -37,13 +37,19 @@ export function JobList({ jobs, onDelete, onStatusChange, onEdit }: Props) {
 
           <Stack gap="4">
             {monthJobs.map((job) => (
-              <JobCard
+              <Box
                 key={job.id}
-                job={job}
-                onDelete={onDelete}
-                onStatusChange={onStatusChange}
-                onEdit={onEdit}
-              />
+                transition="all 0.2s ease"
+                _hover={{
+                  transform: "translateY(-4px) scale(1.01)"
+                }}>
+                <JobCard
+                  job={job}
+                  onDelete={onDelete}
+                  onStatusChange={onStatusChange}
+                  onEdit={onEdit}
+                />
+              </Box>
             ))}
           </Stack>
         </Stack>

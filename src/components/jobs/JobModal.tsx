@@ -1,5 +1,5 @@
 import { CloseButton, Dialog, Portal } from "@chakra-ui/react";
-import { JobForm } from "./JobForm";
+import { JobForm } from "./form/JobForm";
 import type { Job } from "../../types/job";
 
 type Props = {
@@ -15,7 +15,7 @@ export function JobModal({
   onClose,
   onAdd,
   onUpdate,
-  editingJob,
+  editingJob
 }: Props) {
   const isEditing = editingJob !== null;
 

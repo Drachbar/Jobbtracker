@@ -1,4 +1,4 @@
-import { Button, ButtonGroup } from "@chakra-ui/react";
+import { SegmentGroup } from "@chakra-ui/react";
 import { List, Grid2x2 } from "lucide-react";
 
 type Props = {
@@ -8,18 +8,24 @@ type Props = {
 
 export function JobViewToggle({ viewMode, onChange }: Props) {
   return (
-    <ButtonGroup size="sm" variant="outline">
-      <Button
-        onClick={() => onChange("list")}
-        colorPalette={viewMode === "list" ? "blue" : "gray"}>
-        <List size={18} />
-      </Button>
+    <SegmentGroup.Root
+      value={viewMode}
+      onValueChange={(e) => onChange(e.value as "list" | "board")}
+      size="md">
+      <SegmentGroup.Indicator />
 
-      <Button
-        onClick={() => onChange("board")}
-        colorPalette={viewMode === "board" ? "blue" : "gray"}>
-        <Grid2x2 size={18} />
-      </Button>
-    </ButtonGroup>
+      <SegmentGroup.Items
+        items={[
+          {
+            value: "list",
+            label: <List size={18} />
+          },
+          {
+            value: "board",
+            label: <Grid2x2 size={18} />
+          }
+        ]}
+      />
+    </SegmentGroup.Root>
   );
 }
