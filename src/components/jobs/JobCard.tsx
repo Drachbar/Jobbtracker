@@ -108,7 +108,7 @@ export function JobCard({
           bg="bg.panel"
           transition="0.2s"
           _hover={{ shadow: "md", translateY: "-1px" }}>
-          <Box h="1.5" bg={`${getStatusColor(job.status)}.400`} />
+          {!compact && <Box h="1.5" bg={`${getStatusColor(job.status)}.400`} />}
 
           <Card.Body p={compact ? "4" : "5"}>
             <Stack gap={4}>
@@ -130,12 +130,14 @@ export function JobCard({
                 </Stack>
 
                 <Stack gap="2" align="end" minW={compact ? "120px" : "180px"}>
-                  <Box w="100%">
-                    <JobStatusSelect
-                      value={job.status}
-                      onChange={(status) => onStatusChange(job.id, status)}
-                    />
-                  </Box>
+                  {!compact && (
+                    <Box w="100%">
+                      <JobStatusSelect
+                        value={job.status}
+                        onChange={(status) => onStatusChange(job.id, status)}
+                      />
+                    </Box>
+                  )}
 
                   <JobActions
                     onEdit={() => onEdit(job)}

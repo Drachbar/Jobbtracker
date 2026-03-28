@@ -1,74 +1,72 @@
-import { Avatar, Box, Drawer, HStack, Stack, Text } from "@chakra-ui/react";
+import { Drawer, Stack, Text, Card, SimpleGrid } from "@chakra-ui/react";
+import type { JobStatus } from "../../types/job";
+import {
+  JOB_STATUSES,
+  getStatusColor,
+  getStatusLabel,
+} from "../../utils/job-status";
 
 type Props = {
   open: boolean;
   onClose: () => void;
+  stats: Record<JobStatus, number>;
   totalJobs: number;
-  appliedJobs: number;
-  interviewJobs: number;
 };
 
-export function ProfileDrawer({
-  open,
-  onClose,
-  totalJobs,
-  appliedJobs,
-  interviewJobs,
-}: Props) {
+export function ProfileDrawer({ open, onClose, stats, totalJobs }: Props) {
+  const appliedJobs = stats.sokt;
+  const interviewJobs = stats.intervju;
+
   return (
     <Drawer.Root open={open} onOpenChange={(e) => !e.open && onClose()}>
       <Drawer.Backdrop />
       <Drawer.Positioner>
         <Drawer.Content>
-          <Drawer.Header>
+          <Drawer.Header pb="2">
             <Drawer.Title>Profil</Drawer.Title>
           </Drawer.Header>
 
           <Drawer.Body>
             <Stack gap="6">
-              <HStack gap="4">
-                <Avatar.Root size="xl">
-                  <Avatar.Fallback name="Victoria" />
-                </Avatar.Root>
-
-                <Box>
-                  <Text fontWeight="bold" fontSize="lg">
-                    Victoria
-                  </Text>
-                  <Text color="fg.muted" fontSize="sm">
-                    Din jobböversikt
-                  </Text>
-                </Box>
-              </HStack>
-
-              <Stack gap="3">
-                <Box borderWidth="1px" rounded="xl" p="4">
+              {/* header */}
+              ...
+              {/* summary */}
+              <Card.Root variant="subtle" borderRadius="2xl">
+                <Card.Body p="3">
                   <Text fontSize="sm" color="fg.muted">
-                    Totalt antal jobb
+                    Sammanfattning
                   </Text>
-                  <Text fontSize="2xl" fontWeight="bold">
-                    {totalJobs}
+                  <Text mt="1" fontSize="sm">
+                    Du har totalt <b>{totalJobs}</b> jobb sparade, varav{" "}
+                    <b>{appliedJobs}</b> sökta och <b>{interviewJobs}</b>{" "}
+                    intervju(er).
                   </Text>
-                </Box>
-
-                <Box borderWidth="1px" rounded="xl" p="4">
-                  <Text fontSize="sm" color="fg.muted">
-                    Sökt
-                  </Text>
-                  <Text fontSize="2xl" fontWeight="bold">
-                    {appliedJobs}
-                  </Text>
-                </Box>
-
-                <Box borderWidth="1px" rounded="xl" p="4">
-                  <Text fontSize="sm" color="fg.muted">
-                    Intervjuer
-                  </Text>
-                  <Text fontSize="2xl" fontWeight="bold">
-                    {interviewJobs}
-                  </Text>
-                </Box>
-              </Stack>
+                </Card.Body>
+              </Card.Root>
+              {/* stats */}
+              <SimpleGrid columns={2} gap="3">
+                {JOB_STATUSES.map((status) => (
+                  <Card.Root
+                    key={status}
+                    borderRadius="xl"
+                    variant="outline"
+                    borderColor={`${getStatusColor(status)}.200`}
+                    bg={`${getStatusColor(status)}.50`}
+                    _dark={{
+                      bg: `${getStatusColor(status)}.900`,
+                      borderColor: `${getStatusColor(status)}.700`,
+                    }}>
+                    <Card.Body p="3">
+                      <Text fontSize="xs" color="fg.muted">
+                        {getStatusLabel(status)}
+                      </Text>
+                      <Text fontSize="lg" fontWeight="semibold">
+                        {stats[status]}
+                      </Text>
+                    </Card.Body>
+                  </Card.Root>
+                ))}
+              </SimpleGrid>
             </Stack>
           </Drawer.Body>
 

@@ -38,6 +38,8 @@ export function JobForm({ onAdd, editingJob, onUpdate, onCancelEdit }: Props) {
     setStatus,
     deadline,
     setDeadline,
+    appliedAt,
+    setAppliedAt,
     isFetching,
     adSource,
     isEditing,
@@ -46,12 +48,12 @@ export function JobForm({ onAdd, editingJob, onUpdate, onCancelEdit }: Props) {
     fieldsLocked,
     lockedStyles,
     handleFetchInfo,
-    handleSubmit
+    handleSubmit,
   } = useJobForm({
     onAdd,
     editingJob,
     onUpdate,
-    onCancelEdit
+    onCancelEdit,
   });
 
   return (
@@ -96,6 +98,8 @@ export function JobForm({ onAdd, editingJob, onUpdate, onCancelEdit }: Props) {
           <JobStatusSection
             deadline={deadline}
             setDeadline={setDeadline}
+            appliedAt={appliedAt}
+            setAppliedAt={setAppliedAt}
             status={status}
             setStatus={setStatus}
             fieldsLocked={fieldsLocked}

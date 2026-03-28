@@ -7,7 +7,7 @@ import {
   Heading,
   IconButton,
   Stack,
-  useDisclosure
+  useDisclosure,
 } from "@chakra-ui/react";
 import { LuPlus, LuSettings } from "react-icons/lu";
 import { AppHeader } from "./components/AppHeader";
@@ -27,8 +27,8 @@ function groupJobsByStatus<T extends { status: JobStatus }>(jobs: T[]) {
   return Object.fromEntries(
     JOB_STATUSES.map((status) => [
       status,
-      jobs.filter((job) => job.status === status)
-    ])
+      jobs.filter((job) => job.status === status),
+    ]),
   ) as Record<JobStatus, T[]>;
 }
 
@@ -57,7 +57,7 @@ export default function App() {
 
   const jobsByMonth = useMemo(
     () => groupJobsByMonth(filteredJobs),
-    [filteredJobs]
+    [filteredJobs],
   );
 
   function handleCreateJob() {
@@ -151,7 +151,7 @@ export default function App() {
         zIndex="1000"
         _dark={{
           bg: "blackAlpha.500",
-          borderColor: "whiteAlpha.200"
+          borderColor: "whiteAlpha.200",
         }}>
         <Box
           position="relative"
@@ -171,7 +171,7 @@ export default function App() {
             onClick={profileDrawer.onOpen}
             _hover={{
               bg: "blackAlpha.50",
-              _dark: { bg: "whiteAlpha.100" }
+              _dark: { bg: "whiteAlpha.100" },
             }}>
             <Avatar.Root size="sm">
               <Avatar.Fallback name="Victoria" />
@@ -189,10 +189,10 @@ export default function App() {
             boxShadow="0 8px 24px rgba(0,0,0,0.18)"
             _hover={{
               bg: "gray.50",
-              transform: "translateX(-50%) scale(1.05)"
+              transform: "translateX(-50%) scale(1.05)",
             }}
             _active={{
-              transform: "translateX(-50%) scale(0.96)"
+              transform: "translateX(-50%) scale(0.96)",
             }}
             _dark={{
               bg: "gray.800",
@@ -200,8 +200,8 @@ export default function App() {
               borderColor: "gray.700",
               _hover: {
                 bg: "gray.700",
-                transform: "translateX(-50%) scale(1.05)"
-              }
+                transform: "translateX(-50%) scale(1.05)",
+              },
             }}
             transition="all 0.15s ease"
             position="absolute"
@@ -225,7 +225,7 @@ export default function App() {
             onClick={settingsDrawer.onOpen}
             _hover={{
               bg: "blackAlpha.50",
-              _dark: { bg: "whiteAlpha.100" }
+              _dark: { bg: "whiteAlpha.100" },
             }}
             _dark={{ color: "gray.200" }}>
             <LuSettings />
@@ -244,9 +244,8 @@ export default function App() {
       <ProfileDrawer
         open={profileDrawer.open}
         onClose={profileDrawer.onClose}
+        stats={stats}
         totalJobs={jobs.length}
-        appliedJobs={stats.sokt}
-        interviewJobs={stats.intervju}
       />
 
       <SettingsDrawer

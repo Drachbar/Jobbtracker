@@ -76,6 +76,7 @@ export function useJobForm({
   const [deadline, setDeadline] = useState("");
   const [isFetching, setIsFetching] = useState(false);
   const [adSource, setAdSource] = useState<AdSource | null>(null);
+  const [appliedAt, setAppliedAt] = useState("");
 
   const isEditing = editingJob !== null;
   const isValid = company.trim() !== "" && title.trim() !== "";
@@ -84,12 +85,12 @@ export function useJobForm({
 
   const lockedStyles = fieldsLocked
     ? {
-        bg: "gray.100",
-        _dark: { bg: "gray.900" },
-        cursor: "not-allowed",
-        opacity: 0.8,
-        borderColor: "gray.200"
-      }
+      bg: "gray.100",
+      _dark: { bg: "gray.900" },
+      cursor: "not-allowed",
+      opacity: 0.8,
+      borderColor: "gray.200"
+    }
     : {};
 
   function resetForm() {
@@ -101,6 +102,7 @@ export function useJobForm({
     setOccupation("");
     setStatus("vill_soka");
     setDeadline("");
+    setAppliedAt("");
     setAdSource(null);
     setIsFetching(false);
   }
@@ -116,6 +118,7 @@ export function useJobForm({
       setOccupation(editingJob.occupation ?? "");
       setStatus(editingJob.status);
       setDeadline(formatDate(editingJob.deadline));
+      setAppliedAt(formatDate(editingJob.appliedAt));
       setAdSource(null);
       return;
     }
@@ -210,30 +213,32 @@ export function useJobForm({
 
     const jobData: Job = editingJob
       ? {
-          ...editingJob,
-          company: company.trim(),
-          title: title.trim(),
-          url: url.trim(),
-          city: city.trim(),
-          employmentType: employmentType.trim(),
-          occupation: occupation.trim(),
-          status,
-          deadline: formatDate(deadline),
-          adId: getAdIdFromUrl(url) ?? editingJob.adId
-        }
+        ...editingJob,
+        company: company.trim(),
+        title: title.trim(),
+        url: url.trim(),
+        city: city.trim(),
+        employmentType: employmentType.trim(),
+        occupation: occupation.trim(),
+        status,
+        deadline: formatDate(deadline),
+        appliedAt: formatDate(appliedAt),
+        adId: getAdIdFromUrl(url) ?? editingJob.adId
+      }
       : {
-          id: crypto.randomUUID(),
-          company: company.trim(),
-          title: title.trim(),
-          url: url.trim(),
-          city: city.trim(),
-          employmentType: employmentType.trim(),
-          occupation: occupation.trim(),
-          status,
-          deadline: formatDate(deadline),
-          createdAt: new Date().toISOString(),
-          adId: getAdIdFromUrl(url) ?? undefined
-        };
+        id: crypto.randomUUID(),
+        company: company.trim(),
+        title: title.trim(),
+        url: url.trim(),
+        city: city.trim(),
+        employmentType: employmentType.trim(),
+        occupation: occupation.trim(),
+        status,
+        deadline: formatDate(deadline),
+        appliedAt: formatDate(appliedAt),
+        createdAt: new Date().toISOString(),
+        adId: getAdIdFromUrl(url) ?? undefined
+      };
 
     if (editingJob) {
       onUpdate(jobData);
@@ -281,6 +286,8 @@ export function useJobForm({
     setStatus,
     deadline,
     setDeadline,
+    appliedAt,
+    setAppliedAt,
     isFetching,
     adSource,
     isEditing,

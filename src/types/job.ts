@@ -13,4 +13,5 @@ export type Job = {
   deadline?: string;
   createdAt: string;
   adId?: string;
+  appliedAt?: string;
 };
