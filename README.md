@@ -1,73 +1,52 @@
-# React + TypeScript + Vite
+# Jobbtracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Jobbtracker är en webapp för att hålla koll på jobbansökningar – status, deadlines och information på ett ställe.
 
-Currently, two official plugins are available:
+## Funktioner
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Lägg till jobb manuellt med företag, titel, länk, stad, anställningsform, status och deadline.
+- Hämta information automatiskt från Platsbanken via annonslänk.
+- Sök bland sparade jobb på företag eller titel. 
+- Filtrera jobb efter status. 
+- Visa jobb antingen som lista eller board.
+- Uppdatera status direkt i gränssnittet.
+- Spara all data lokalt i webbläsaren med `localStorage`. 
 
-## React Compiler
+## Statusar
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Appen använder följande statusar för att följa en ansökan:
 
-## Expanding the ESLint configuration
+- Vill söka
+- Sökt
+- Intervju
+- Avslag
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Teknik
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Projektet är byggt med:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- React
+- TypeScript
+- Vite
+- Chakra UI
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Kom igång
+
+Installera beroenden:
+
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Projektidé
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Tanken med Jobbtracker är att göra jobbsökandet mer strukturerat. I stället för att hålla reda på ansökningar i anteckningar, mejl eller flera olika flikar samlas allt i en och samma vy.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Möjliga framtida förbättringar
+
+- Redigera befintliga jobb
+- Sortering på deadline eller skapad datum
+- Fler statusar, till exempel erbjudande
+- Export och import av data
+- Notiser för sista ansökningsdag
+- Synkning mot backend eller databas
