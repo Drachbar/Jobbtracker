@@ -35,7 +35,7 @@ export function BottomNav({ onOpenProfile, onOpenSettings, onCreateJob, active =
       }}
     >
       <Box position="relative" minH="92px" pb="env(safe-area-inset-bottom)" maxW="460px" mx="auto">
-        <VStack position="absolute" left="20px" top="50%" transform="translateY(-50%)" gap="1">
+        <VStack position="absolute" left="32px" top="50%" transform="translateY(-50%)" gap="1">
           <IconButton
             aria-label="Profil"
             rounded="full"
@@ -111,7 +111,7 @@ export function BottomNav({ onOpenProfile, onOpenSettings, onCreateJob, active =
           </Text>
         </VStack>
 
-        <VStack position="absolute" right="20px" top="50%" transform="translateY(-50%)" gap="1">
+        <VStack position="absolute" right="32px" top="50%" transform="translateY(-50%)" gap="1">
           <IconButton
             aria-label="Inställningar"
             rounded="full"
