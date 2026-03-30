@@ -18,7 +18,7 @@ type Props = {
   onCancelEdit: () => void;
 };
 
-export function JobForm({ onAdd, editingJob, onUpdate, onCancelEdit }: Props) {
+export default function JobForm({ onAdd, editingJob, onUpdate, onCancelEdit }: Props) {
   const {
     mode,
     setMode,

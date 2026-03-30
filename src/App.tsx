@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { Suspense, lazy, useMemo, useState } from 'react';
 import {
   Avatar,
   Box,
@@ -8,27 +8,25 @@ import {
   IconButton,
   Stack,
   useDisclosure,
-} from "@chakra-ui/react";
-import { LuPlus, LuSettings } from "react-icons/lu";
-import { AppHeader } from "./components/AppHeader";
-import { ProfileDrawer } from "./components/profile/ProfileDrawer";
-import { SettingsDrawer } from "./components/settings/SettingsDrawer";
-import { JobBoard } from "./components/jobs/JobBoard";
-import { JobFilters } from "./components/jobs/JobFilters";
-import { JobList } from "./components/jobs/JobList";
-import { JobModal } from "./components/jobs/JobModal";
-import { JobStats } from "./components/jobs/JobStats";
-import { useJobs } from "./hooks/useJobs";
-import type { Job, JobStatus } from "./types/job";
-import { groupJobsByMonth } from "./utils/job-grouping";
-import { JOB_STATUSES } from "./utils/job-status";
+} from '@chakra-ui/react';
+import { LuPlus, LuSettings } from 'react-icons/lu';
+import { AppHeader } from './components/AppHeader';
+import { JobBoard } from './components/jobs/JobBoard';
+import { JobFilters } from './components/jobs/JobFilters';
+import { JobList } from './components/jobs/JobList';
+import { useJobs } from './hooks/useJobs';
+import type { Job, JobStatus } from './types/job';
+import { groupJobsByMonth } from './utils/job-grouping';
+import { JOB_STATUSES } from './utils/job-status';
+
+const ProfileDrawer = lazy(() => import('./components/profile/ProfileDrawer'));
+const SettingsDrawer = lazy(() => import('./components/settings/SettingsDrawer'));
+const JobModal = lazy(() => import('./components/jobs/JobModal'));
+const JobStats = lazy(() => import('./components/jobs/JobStats'));
 
 function groupJobsByStatus<T extends { status: JobStatus }>(jobs: T[]) {
   return Object.fromEntries(
-    JOB_STATUSES.map((status) => [
-      status,
-      jobs.filter((job) => job.status === status),
-    ]),
+    JOB_STATUSES.map((status) => [status, jobs.filter((job) => job.status === status)])
   ) as Record<JobStatus, T[]>;
 }
 
@@ -47,7 +45,7 @@ export default function App() {
     changeStatus,
   } = useJobs();
 
-  const [viewMode, setViewMode] = useState<"list" | "board">("list");
+  const [viewMode, setViewMode] = useState<'list' | 'board'>('list');
   const [showJobs, setShowJobs] = useState(true);
   const [editingJob, setEditingJob] = useState<Job | null>(null);
 
@@ -55,10 +53,7 @@ export default function App() {
   const profileDrawer = useDisclosure();
   const settingsDrawer = useDisclosure();
 
-  const jobsByMonth = useMemo(
-    () => groupJobsByMonth(filteredJobs),
-    [filteredJobs],
-  );
+  const jobsByMonth = useMemo(() => groupJobsByMonth(filteredJobs), [filteredJobs]);
 
   function handleCreateJob() {
     setEditingJob(null);
@@ -78,13 +73,15 @@ export default function App() {
   return (
     <Container
       maxW="7xl"
-      py={{ base: "6", md: "10" }}
+      py={{ base: '6', md: '10' }}
       pb="calc(120px + env(safe-area-inset-bottom))"
     >
       <Stack gap="8">
         <AppHeader search={search} onSearchChange={setSearch} />
 
-        <JobStats stats={stats} />
+        <Suspense fallback={null}>
+          <JobStats stats={stats} />
+        </Suspense>
 
         <JobFilters
           statusFilter={statusFilter}
@@ -99,21 +96,15 @@ export default function App() {
           size="sm"
           onClick={() => setShowJobs((prev) => !prev)}
         >
-          {showJobs ? "Dölj jobb" : "Visa jobb"}
+          {showJobs ? 'Dölj jobb' : 'Visa jobb'}
         </Button>
 
         {showJobs &&
           (filteredJobs.length === 0 ? (
-            <Box
-              borderWidth="1px"
-              rounded="xl"
-              p="8"
-              textAlign="center"
-              color="gray.500"
-            >
+            <Box borderWidth="1px" rounded="xl" p="8" textAlign="center" color="gray.500">
               Inga jobb matchar filtret.
             </Box>
-          ) : viewMode === "list" ? (
+          ) : viewMode === 'list' ? (
             <JobList
               jobs={filteredJobs}
               onDelete={deleteJob}
@@ -153,8 +144,8 @@ export default function App() {
         backdropFilter="blur(12px)"
         zIndex="1000"
         _dark={{
-          bg: "blackAlpha.500",
-          borderColor: "whiteAlpha.200",
+          bg: 'blackAlpha.500',
+          borderColor: 'whiteAlpha.200',
         }}
       >
         <Box
@@ -175,8 +166,8 @@ export default function App() {
             size="lg"
             onClick={profileDrawer.onOpen}
             _hover={{
-              bg: "blackAlpha.50",
-              _dark: { bg: "whiteAlpha.100" },
+              bg: 'blackAlpha.50',
+              _dark: { bg: 'whiteAlpha.100' },
             }}
           >
             <Avatar.Root size="sm">
@@ -194,19 +185,19 @@ export default function App() {
             borderColor="gray.200"
             boxShadow="0 8px 24px rgba(0,0,0,0.18)"
             _hover={{
-              bg: "gray.50",
-              transform: "translateX(-50%) scale(1.05)",
+              bg: 'gray.50',
+              transform: 'translateX(-50%) scale(1.05)',
             }}
             _active={{
-              transform: "translateX(-50%) scale(0.96)",
+              transform: 'translateX(-50%) scale(0.96)',
             }}
             _dark={{
-              bg: "gray.800",
-              color: "gray.200",
-              borderColor: "gray.700",
+              bg: 'gray.800',
+              color: 'gray.200',
+              borderColor: 'gray.700',
               _hover: {
-                bg: "gray.700",
-                transform: "translateX(-50%) scale(1.05)",
+                bg: 'gray.700',
+                transform: 'translateX(-50%) scale(1.05)',
               },
             }}
             transition="all 0.15s ease"
@@ -231,35 +222,44 @@ export default function App() {
             color="gray.700"
             onClick={settingsDrawer.onOpen}
             _hover={{
-              bg: "blackAlpha.50",
-              _dark: { bg: "whiteAlpha.100" },
+              bg: 'blackAlpha.50',
+              _dark: { bg: 'whiteAlpha.100' },
             }}
-            _dark={{ color: "gray.200" }}
+            _dark={{ color: 'gray.200' }}
           >
             <LuSettings />
           </IconButton>
         </Box>
       </Box>
 
-      <JobModal
-        open={jobModal.open}
-        onClose={handleCloseModal}
-        onAdd={addJob}
-        onUpdate={updateJob}
-        editingJob={editingJob}
-      />
+      {jobModal.open && (
+        <Suspense fallback={null}>
+          <JobModal
+            open={jobModal.open}
+            onClose={handleCloseModal}
+            onAdd={addJob}
+            onUpdate={updateJob}
+            editingJob={editingJob}
+          />
+        </Suspense>
+      )}
 
-      <ProfileDrawer
-        open={profileDrawer.open}
-        onClose={profileDrawer.onClose}
-        stats={stats}
-        totalJobs={jobs.length}
-      />
+      {profileDrawer.open && (
+        <Suspense fallback={null}>
+          <ProfileDrawer
+            open={profileDrawer.open}
+            onClose={profileDrawer.onClose}
+            stats={stats}
+            totalJobs={jobs.length}
+          />
+        </Suspense>
+      )}
 
-      <SettingsDrawer
-        open={settingsDrawer.open}
-        onClose={settingsDrawer.onClose}
-      />
+      {settingsDrawer.open && (
+        <Suspense fallback={null}>
+          <SettingsDrawer open={settingsDrawer.open} onClose={settingsDrawer.onClose} />
+        </Suspense>
+      )}
     </Container>
   );
 }

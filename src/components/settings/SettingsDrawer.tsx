@@ -1,12 +1,12 @@
-import { Drawer, Stack, Text } from "@chakra-ui/react";
-import { ColorModeButton } from "../ui/color-mode";
+import { Drawer, Stack, Text } from '@chakra-ui/react';
+import { ColorModeButton } from '../ui/color-mode';
 
 type Props = {
   open: boolean;
   onClose: () => void;
 };
 
-export function SettingsDrawer({ open, onClose }: Props) {
+export default function SettingsDrawer({ open, onClose }: Props) {
   return (
     <Drawer.Root open={open} onOpenChange={(e) => !e.open && onClose()}>
       <Drawer.Backdrop />
@@ -26,8 +26,8 @@ export function SettingsDrawer({ open, onClose }: Props) {
               <Stack gap="2">
                 <Text fontWeight="medium">Om appen</Text>
                 <Text fontSize="sm" color="fg.muted">
-                  Jobbtracker hjälper dig hålla koll på jobb du vill söka, har
-                  sökt och gått vidare med.
+                  Jobbtracker hjälper dig hålla koll på jobb du vill söka, har sökt och gått vidare
+                  med.
                 </Text>
               </Stack>
             </Stack>

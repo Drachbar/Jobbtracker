@@ -1,10 +1,6 @@
-import { Drawer, Stack, Text, Card, SimpleGrid } from "@chakra-ui/react";
-import type { JobStatus } from "../../types/job";
-import {
-  JOB_STATUSES,
-  getStatusColor,
-  getStatusLabel,
-} from "../../utils/job-status";
+import { Drawer, Stack, Text, Card, SimpleGrid } from '@chakra-ui/react';
+import type { JobStatus } from '../../types/job';
+import { JOB_STATUSES, getStatusColor, getStatusLabel } from '../../utils/job-status';
 
 type Props = {
   open: boolean;
@@ -13,7 +9,7 @@ type Props = {
   totalJobs: number;
 };
 
-export function ProfileDrawer({ open, onClose, stats, totalJobs }: Props) {
+export default function ProfileDrawer({ open, onClose, stats, totalJobs }: Props) {
   const appliedJobs = stats.sokt;
   const interviewJobs = stats.intervju;
 
@@ -37,9 +33,8 @@ export function ProfileDrawer({ open, onClose, stats, totalJobs }: Props) {
                     Sammanfattning
                   </Text>
                   <Text mt="1" fontSize="sm">
-                    Du har totalt <b>{totalJobs}</b> jobb sparade, varav{" "}
-                    <b>{appliedJobs}</b> sökta och <b>{interviewJobs}</b>{" "}
-                    intervju(er).
+                    Du har totalt <b>{totalJobs}</b> jobb sparade, varav <b>{appliedJobs}</b> sökta
+                    och <b>{interviewJobs}</b> intervju(er).
                   </Text>
                 </Card.Body>
               </Card.Root>

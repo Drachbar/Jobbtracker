@@ -1,16 +1,12 @@
-import { Card, SimpleGrid, Stat } from "@chakra-ui/react";
-import type { JobStatus } from "../../types/job";
-import {
-  JOB_STATUSES,
-  getStatusColor,
-  getStatusLabel,
-} from "../../utils/job-status";
+import { Card, SimpleGrid, Stat } from '@chakra-ui/react';
+import type { JobStatus } from '../../types/job';
+import { JOB_STATUSES, getStatusColor, getStatusLabel } from '../../utils/job-status';
 
 type Props = {
   stats: Record<JobStatus, number>;
 };
 
-export function JobStats({ stats }: Props) {
+export default function JobStats({ stats }: Props) {
   return (
     <SimpleGrid columns={{ base: 2, md: 4 }} gap="3">
       {JOB_STATUSES.map((status) => {
@@ -27,7 +23,7 @@ export function JobStats({ stats }: Props) {
             _dark={{
               bg: `${color}.900`,
               borderColor: `${color}.600`,
-              boxShadow: "md",
+              boxShadow: 'md',
             }}
           >
             <Card.Body>
@@ -45,7 +41,7 @@ export function JobStats({ stats }: Props) {
                   fontSize="3xl"
                   fontWeight="bold"
                   color="gray.800"
-                  _dark={{ color: "white" }}
+                  _dark={{ color: 'white' }}
                 >
                   {stats[status]}
                 </Stat.ValueText>
